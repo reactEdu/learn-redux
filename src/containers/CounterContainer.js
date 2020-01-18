@@ -4,8 +4,9 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux'
 import { increase, decrease, setDiff } from '../modules/counter';
 
+// props에 매핑한 이름 변경됬으므로 확인!
 const CounterContainer = ({
-  number, diff, onIncrease, onDecrease, onSetDiff
+  number, diff, increase, decrease, setDiff
 }) => {
 
   return (
@@ -13,9 +14,9 @@ const CounterContainer = ({
       <Counter
         number={number}
         diff={diff}
-        onIncrease={onIncrease}
-        onDecrease={onDecrease}
-        onSetDiff={onSetDiff}
+        onIncrease={increase}
+        onDecrease={decrease}
+        onSetDiff={setDiff}
       />
     </div>
   );
@@ -28,10 +29,9 @@ const mapStateToProps = (state) => ({
 });
 
 // 액션을 생성해서 dispatch 하는 역할
-const mapDispatchToProps = (dispatch) => ({
-  onIncrease : () => dispatch(increase()),
-  onDecrease : () => dispatch(decrease()),
-  onSetDiff : (diff) => dispatch(setDiff(diff)),
-});
+// 같은 이름으로 매핑해서 넣으므로 값 필요 없음
+const mapDispatchToProps = {
+  increase, decrease, setDiff,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(CounterContainer);
