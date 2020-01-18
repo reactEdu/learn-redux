@@ -1,22 +1,12 @@
 import React from 'react';
 import Counter from '../components/Counter';
-import { useSelector, useDispatch, shallowEqual } from 'react-redux'
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux'
 import { increase, decrease, setDiff } from '../modules/counter';
 
-const CounterContainer = () => {
-  // 상태를 조회하는 useSelector
-  const { number, diff } = useSelector(state => ({
-    // 매개변수 state 는 store.getState()의 return값임
-    number: state.counter.number,
-    diff: state.counter.diff,
-  }), shallowEqual); 
-
-  const dispatch = useDispatch();
-  
-  // 액션을 생성해서 dispatch 함
-  const onIncrease = () => dispatch(increase());
-  const onDecrease = () => dispatch(decrease());
-  const onSetDiff = (diff) => dispatch(setDiff(diff));
+const CounterContainer = ({
+  number, diff, onIncrease, onDecrease, onSetDiff
+}) => {
 
   return (
     <div>
@@ -31,4 +21,17 @@ const CounterContainer = () => {
   );
 };
 
-export default CounterContainer;
+// 상태를 조회하는 useSelector 역할
+const mapStateToProps = (state) => ({
+  number: state.counter.number,
+  diff: state.counter.diff,
+});
+
+// 액션을 생성해서 dispatch 하는 역할
+const mapDispatchToProps = (dispatch) => ({
+  onIncrease : () => dispatch(increase()),
+  onDecrease : () => dispatch(decrease()),
+  onSetDiff : (diff) => dispatch(setDiff(diff)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(CounterContainer);
