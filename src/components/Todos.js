@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, memo } from 'react';
 
-const TodoItem = ({ todo, onToggle }) => { // todo: 할일 낱개
+const TodoItem = memo(({ todo, onToggle }) => { // todo: 할일 낱개
   return (
     <li 
       style={{
@@ -11,9 +11,9 @@ const TodoItem = ({ todo, onToggle }) => { // todo: 할일 낱개
       {todo.text}
     </li>
   );
-};
+});
 
-const TodoList = ({ todos, onToggle }) => {
+const TodoList = memo(({ todos, onToggle }) => {
   return (
     <ul>
       {
@@ -22,7 +22,7 @@ const TodoList = ({ todos, onToggle }) => {
       }
     </ul>
   );
-};
+});
 
 // todos: 할일 목록, onCreate: 새로운 할일 등록, onToggle: 할일 상태 반전
 const Todos = ({ todos, onCreate, onToggle }) => {
@@ -45,4 +45,4 @@ const Todos = ({ todos, onCreate, onToggle }) => {
   );
 };
 
-export default Todos;
+export default memo(Todos);
